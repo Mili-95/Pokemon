@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+        <link rel="stylesheet" href="style.css">
+        <script type="text/javascript" src="script.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="theme-color" content="#000000" />
+    </head>
+    <body>
+       <h2>Pokémons</h2>
+
+<div id="containerImages" data-actual='1'></div>
+
+<button type="button" id="prev"> << </button>
+<button type="button" id="next"> >> </button>
+
+<span id="name"></span>
+   </body>
+<script type="text/javascript">
+    function API( _id ) {
+    return axios({
+      method: 'GET',
+      url: `https://pokeapi.co/api/v2/pokemon/ditto`,
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.data)
+}
+
+function changePoke( _id ) {
+  let imagePoke
+  let gifPoke
+  let namePoke = document.querySelector('#name')
+  const containerImages = document.querySelector('#containerImages')
+  
+  containerImages.innerHTML = '<div id="load"><div class="circle"></div><div class="circle"></div><div class="circle"></div></div>'
+  
+  API( _id )
+    .then(pokemon => {  
+    
+      const pokemonImages = pokemon.sprites
+      namePoke.innerHTML = pokemon.name
+    
+      containerImages.innerHTML = ''
+    
+      Object.keys(pokemonImages).map((key) => {
+        if(pokemonImages[key]){
+          imagePoke = document.createElement('img')
+          imagePoke.src = pokemonImages[key] 
+          containerImages.appendChild(imagePoke)
+        }
+      })
+    
+      gifPoke = document.createElement('img')
+      gifPoke.src = `http://pokestadium.com/sprites/xy/${pokemon.name}.gif`
+      containerImages.appendChild(gifPoke)
+      
+    })
+  .catch(error => console.log(error))
+}
+
+document.getElementById('prev').addEventListener('click', (e) => {
+  let actualPoke = eval(document.querySelector('#containerImages').dataset.actual)
+  let prevPoke = 1
+  if(actualPoke > 1){
+    prevPoke = actualPoke - 1
+    document.querySelector('#containerImages').dataset.actual = prevPoke
+  }
+  
+  changePoke( _id = prevPoke )
+})
+
+document.getElementById('next').addEventListener('click', (e) => {
+  let actualPoke = eval(document.querySelector('#containerImages').dataset.actual)
+  let nextPoke = 800
+  if(actualPoke < nextPoke){
+    nextPoke = actualPoke + 1
+    document.querySelector('#containerImages').dataset.actual = nextPoke
+  }
+  
+  changePoke( _id = nextPoke )
+})
+changePoke( _id = 1 )
+</script>
+
+</html>

@@ -1,0 +1,81 @@
+*{box-sizing: border-box;}
+  h2 { 
+  font-family: Arial, sans-serif;
+  text-transform: capitalize;
+}
+
+#containerImages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 200px;
+  border: 1px solid #cecece
+}
+
+#prev,
+#next,
+#name { 
+  margin-top: 10px;
+}
+
+#name { 
+  font-family: Arial, sans-serif;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+#prev,
+#next {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  background: transparent;
+  border: 2px solid #8844ee;
+  color: #8844ee;
+  cursor: pointer;
+  outline: none;
+}
+
+#prev {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#next {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+
+#load {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100px;
+}
+
+#load .circle {
+  height: 15px;
+  width: 15px;
+  background: #cecece;
+  border-radius: 50%;
+  margin: 0 2px;
+  animation: loadingPoke .6s ease infinite alternate;
+}
+
+#load .circle:nth-child(1) {
+  animation-delay: .1s;
+}
+
+#load .circle:nth-child(2) {
+  animation-delay: .2s;
+}
+
+#load .circle:nth-child(3) {
+  animation-delay: .3s;
+}
+
+@keyframes loadingPoke {
+  from { transform: translate3d(0,0,0) }
+  to { transform: translate3d(0,10px,0) }
+}
